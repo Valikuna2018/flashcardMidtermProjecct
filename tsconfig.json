@@ -6,7 +6,12 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "node", 
+    "baseUrl": "./",
+    "paths": {
+      "@tensorflow-models/handpose": ["node_modules/@tensorflow-models/handpose"] // Added alias for handpose
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]
