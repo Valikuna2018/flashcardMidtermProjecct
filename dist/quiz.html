@@ -4,23 +4,32 @@
   <meta charset="UTF-8" />
   <title>Quiz</title>
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      margin: 0;
-    }
+    body { font-family: sans-serif; padding: 20px; margin: 0; }
     #flashcard { font-size: 20px; margin-bottom: 15px; }
-    #revealBtn { margin-bottom: 10px; }
+    #revealBtn { display: inline-block; margin-bottom: 15px; }
+    #videoCam {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      width: 170px;
+      border: 2px dashed darkblue;
+      display: none;
+      z-index: 9999;
+    }
     .rating-btn { display: none; margin-right: 5px; }
   </style>
 </head>
 <body>
   <div id="flashcard"></div>
   <button id="revealBtn">Reveal Answer</button>
+  <video id="videoCam" autoplay muted playsinline></video>
   <button id="easy"       class="rating-btn">Easy</button>
   <button id="hard"       class="rating-btn">Hard</button>
   <button id="impossible" class="rating-btn">Impossible</button>
 
+  <!-- Removed all CDN/script-src-violating <script> tags -->
+
+  <!-- Only load your bundled quiz logic -->
   <script type="module" src="quiz.js"></script>
 </body>
 </html>
