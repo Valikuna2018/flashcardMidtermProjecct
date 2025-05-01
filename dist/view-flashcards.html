@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Flashcards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .flashcard-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px auto;
+            width: 80%;
+            max-width: 600px;
+        }
+        .flashcard {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .flashcard:last-child {
+            border-bottom: none;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background-color: #ff4d4d;
+        }
+        .clear-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+        }
+        .clear-btn:hover {
+            background-color: #0056b3;
+        }
+        .no-flashcards {
+            text-align: center;
+            color: #888;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flashcards</h1>
+    <div id="flashcardsContainer" class="flashcard-container">
+        <!-- Flashcards will be displayed here -->
+        <p class="no-flashcards" id="noFlashcardsText">No flashcards available. Save some highlights first!</p>
+    </div>
+    <button class="clear-btn" id="clearAllBtn">Clear All Flashcards</button>
+
+    <script>
+        // Display flashcards from chrome storage
+        document.addEventListener('DOMContentLoaded', () => {
+            chrome.storage.local.get('flashcards', (result) => {
+                const flashcards = result.flashcards || [];
+                const container = document.getElementById('flashcardsContainer');
+                const noFlashcardsText = document.getElementById('noFlashcardsText');
+                container.innerHTML = '';
+
+                if (flashcards.length > 0) {
+                    noFlashcardsText.style.display = 'none'; 
+                    flashcards.forEach((card, index) => {
+                        const div = document.createElement('div');
+                        div.classList.add('flashcard');
+                        div.innerHTML = `
+                            <span>${index + 1}. ${card}</span>
+                            <button class="delete-btn" data-index="${index}">Delete</button>
+                        `;
+                        container.appendChild(div);
+                    });
+
+                    
+                    const deleteBtns = container.getElementsByClassName('delete-btn');
+                    Array.from(deleteBtns).forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const index = parseInt(e.target.getAttribute('data-index'), 10);
+                            deleteFlashcard(index);
+                        });
+                    });
+                } else {
+                    noFlashcardsText.style.display = 'block'; // Show 'no flashcards' message
+                }
+            });
+        });
+
+        
+        function deleteFlashcard(index) {
+            chrome.storage.local.get('flashcards', (result) => {
+                const flashcards = result.flashcards || [];
+                flashcards.splice(index, 1); 
+                chrome.storage.local.set({ flashcards }, () => {
+                    alert('Flashcard deleted!');
+                    location.reload(); // Reload the page to update the list
+                });
+            });
+        }
+
+        // Clear all flashcards
+        document.getElementById('clearAllBtn')?.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete all flashcards?')) {
+                chrome.storage.local.set({ flashcards: [] }, () => {
+                    alert('All flashcards cleared!');
+                    location.reload(); // Reload the page to update the list
+                });
+            }
+        });
+    </script>
+</body>
+</html>

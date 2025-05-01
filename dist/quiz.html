@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+    #flashcard { font-size: 20px; margin-bottom: 15px; }
+    #revealBtn { margin-bottom: 10px; }
+    .rating-btn { display: none; margin-right: 5px; }
+  </style>
+</head>
+<body>
+  <div id="flashcard"></div>
+  <button id="revealBtn">Reveal Answer</button>
+  <button id="easy"       class="rating-btn">Easy</button>
+  <button id="hard"       class="rating-btn">Hard</button>
+  <button id="impossible" class="rating-btn">Impossible</button>
+
+  <script type="module" src="quiz.js"></script>
+</body>
+</html>

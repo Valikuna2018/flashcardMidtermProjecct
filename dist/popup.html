@@ -1,0 +1,48 @@
+<!-- popup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flashcard Extension</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      width: 300px;
+    }
+    button {
+      margin: 5px 0;
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .card {
+      margin: 8px 0;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .delete-btn {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="saveBtn">Save Flashcard</button>
+  <button id="viewBtn">View Flashcards</button>
+  <button id="clearAllBtn">Clear All</button>
+  <button id="startQuizBtn">Start Quiz</button>
+
+  <div id="flashcardsList"></div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
